@@ -23,7 +23,7 @@ num_gpus = 1; desc += '-1gpu'
 # num_gpus = 4; desc += '-4gpu'
 #num_gpus = 8; desc += '-8gpu'
 
-image_size = config.RESOLUTION;  desc += "-{}x{}".format(RESOLUTION,RESOLUTION);   total_kimg = 12000
+image_size = config.RESOLUTION;  desc += "-{}x{}".format(config.RESOLUTION,config.RESOLUTION);   total_kimg = 12000
 #image_size = 256;  desc += '-256x256';   total_kimg = 14000
 # image_size = 512;  desc += '-512x512';   total_kimg = 16000
 # image_size = 1024; desc += '-1024x1024'; total_kimg = 18000

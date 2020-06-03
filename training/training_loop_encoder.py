@@ -205,24 +205,29 @@ def training_loop(
                 it, recon_, adv_, d_r_, d_f_, d_g_, dnnlib.util.format_time(time.time() - start_time)))
             sys.stdout.flush()
             tflib.autosummary.save_summaries(summary_log, it)
+            
+            
+            
+            
+        if it % 500 == 0:
+            batch_images_test = sess.run(image_batch_test)
+            batch_images_test = misc.adjust_dynamic_range(batch_images_test.astype(np.float32), [0, 255], [-1., 1.])
+            samples2 = sess.run(fake_X_val, feed_dict={real_test: batch_images_test})
+            orin_recon = np.concatenate([batch_images_test, samples2], axis=0)
+            orin_recon = adjust_pixel_range(orin_recon)
+            orin_recon = fuse_images(orin_recon, row=2, col=submit_config.batch_size_test)
+            # save image results during training, first row is original images and the second row is reconstructed images
+            save_image('%s/iter_%08d.png' % (submit_config.run_dir, cur_nimg), orin_recon)
+
+            # save image to gdrive
+            img_path = os.path.join(config.GDRIVE_PATH, 'images', ('%s/iter_%08d.png' % (submit_config.run_dir, cur_nimg)))
+            save_image(img_path, orin_recon)
 
         if cur_nimg >= tick_start_nimg + 65000:
             cur_tick += 1
             tick_start_nimg = cur_nimg
 
-            if cur_tick % image_snapshot_ticks == 0:
-                batch_images_test = sess.run(image_batch_test)
-                batch_images_test = misc.adjust_dynamic_range(batch_images_test.astype(np.float32), [0, 255], [-1., 1.])
-                samples2 = sess.run(fake_X_val, feed_dict={real_test: batch_images_test})
-                orin_recon = np.concatenate([batch_images_test, samples2], axis=0)
-                orin_recon = adjust_pixel_range(orin_recon)
-                orin_recon = fuse_images(orin_recon, row=2, col=submit_config.batch_size_test)
-                # save image results during training, first row is original images and the second row is reconstructed images
-                save_image('%s/iter_%08d.png' % (submit_config.run_dir, cur_nimg), orin_recon)
-                
-                # save image to gdrive
-                img_path = os.path.join(config.GDRIVE_PATH, 'images', ('%s/iter_%08d.png' % (submit_config.run_dir, cur_nimg)))
-                save_image(img_path, orin_recon)
+
 
             if cur_tick % network_snapshot_ticks == 0:
                 pkl = os.path.join(submit_config.run_dir, 'network-snapshot-%08d.pkl' % (cur_nimg))
