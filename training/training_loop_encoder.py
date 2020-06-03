@@ -220,7 +220,7 @@ def training_loop(
             save_image('%s/iter_%08d.png' % (submit_config.run_dir, cur_nimg), orin_recon)
 
             # save image to gdrive
-            img_path = os.path.join(config.GDRIVE_PATH, 'images', ('%s/iter_%08d.png' % (submit_config.run_dir, cur_nimg)))
+            img_path = os.path.join(config.GDRIVE_PATH, 'images', ('iter_%08d.png' % (cur_nimg)))
             save_image(img_path, orin_recon)
 
         if cur_nimg >= tick_start_nimg + 65000:
