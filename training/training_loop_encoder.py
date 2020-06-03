@@ -183,6 +183,10 @@ def training_loop(
     tick_start_nimg = cur_nimg
     start_time = time.time()
 
+    
+    init = tf.initialize_all_variables()
+    sess.run(init)
+    
     print('Optimization starts!!!')
     for it in range(start, max_iters):
 
