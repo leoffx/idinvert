@@ -15,8 +15,7 @@ from utils.visualizer import fuse_images
 from utils.visualizer import save_image
 from utils.visualizer import adjust_pixel_range
 
-GOOGLE_DRIVE_PATH = "/content/gdrive/My Drive/Public/tensorboards_shared/Training_Encoder_TF/128x128_All_Losses"
-
+import config
 
 def process_reals(x, mirror_augment, drange_data, drange_net):
     with tf.name_scope('ProcessReals'):
@@ -178,7 +177,7 @@ def training_loop(
     image_batch_train = get_train_data(sess, data_dir=dataset_args.data_train, submit_config=submit_config, mode='train')
     image_batch_test = get_train_data(sess, data_dir=dataset_args.data_test, submit_config=submit_config, mode='test')
 
-    summary_log = tf.summary.FileWriter(GOOGLE_DRIVE_PATH)
+    summary_log = tf.summary.FileWriter(config.GDRIVE_PATH)
 
     cur_nimg = start * submit_config.batch_size
     cur_tick = 0
@@ -222,15 +221,15 @@ def training_loop(
                 save_image('%s/iter_%08d.png' % (submit_config.run_dir, cur_nimg), orin_recon)
                 
                 # save image to gdrive
-                img_path = os.path.join(GOOGLE_DRIVE_PATH, 'images', ('%s/iter_%08d.png' % (submit_config.run_dir, cur_nimg)))
-                save_image('%s/iter_%08d.png' % (submit_config.run_dir, cur_nimg), orin_recon)
+                img_path = os.path.join(config.GDRIVE_PATH, 'images', ('%s/iter_%08d.png' % (submit_config.run_dir, cur_nimg)))
+                save_image(img_path, orin_recon)
 
             if cur_tick % network_snapshot_ticks == 0:
                 pkl = os.path.join(submit_config.run_dir, 'network-snapshot-%08d.pkl' % (cur_nimg))
                 misc.save_pkl((E, G, D, Gs), pkl)
                 
                 # save network snapshot to gdrive
-                pkl_drive = os.path.join(GOOGLE_DRIVE_PATH, 'snapshots', 'network-snapshot-%08d.pkl' % (cur_nimg))
+                pkl_drive = os.path.join(config.GDRIVE_PATH, 'snapshots', 'network-snapshot-%08d.pkl' % (cur_nimg))
                 misc.save_pkl((E, G, D, Gs), pkl_drive)
 
     misc.save_pkl((E, G, D, Gs), os.path.join(submit_config.run_dir, 'network-final.pkl'))
