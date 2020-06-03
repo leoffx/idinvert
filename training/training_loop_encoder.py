@@ -15,6 +15,8 @@ from utils.visualizer import fuse_images
 from utils.visualizer import save_image
 from utils.visualizer import adjust_pixel_range
 
+GOOGLE_DRIVE_PATH = "/content/gdrive/My Drive/Public/tensorboards_shared/Training_Encoder_TF/128x128_All_Losses"
+
 
 def process_reals(x, mirror_augment, drange_data, drange_net):
     with tf.name_scope('ProcessReals'):
@@ -98,7 +100,7 @@ def training_loop(
                   resume_run_id           = None,     # Run ID or network pkl to resume training from, None = start from scratch.
                   resume_snapshot         = None,     # Snapshot index to resume training from, None = autodetect.
                   image_snapshot_ticks    = 1,        # How often to export image snapshots?
-                  network_snapshot_ticks  = 5,       # How often to export network snapshots?
+                  network_snapshot_ticks  = 4,       # How often to export network snapshots?
                   max_iters               = 150000):
 
     tflib.init_tf(tf_config)
@@ -176,7 +178,7 @@ def training_loop(
     image_batch_train = get_train_data(sess, data_dir=dataset_args.data_train, submit_config=submit_config, mode='train')
     image_batch_test = get_train_data(sess, data_dir=dataset_args.data_test, submit_config=submit_config, mode='test')
 
-    summary_log = tf.summary.FileWriter(submit_config.run_dir)
+    summary_log = tf.summary.FileWriter(GOOGLE_DRIVE_PATH)
 
     cur_nimg = start * submit_config.batch_size
     cur_tick = 0
@@ -188,6 +190,8 @@ def training_loop(
     sess.run(init)
     
     print('Optimization starts!!!')
+    
+    
     for it in range(start, max_iters):
 
         batch_images = sess.run(image_batch_train)
@@ -216,10 +220,18 @@ def training_loop(
                 orin_recon = fuse_images(orin_recon, row=2, col=submit_config.batch_size_test)
                 # save image results during training, first row is original images and the second row is reconstructed images
                 save_image('%s/iter_%08d.png' % (submit_config.run_dir, cur_nimg), orin_recon)
+                
+                # save image to gdrive
+                img_path = os.path.join(GOOGLE_DRIVE_PATH, 'images', ('%s/iter_%08d.png' % (submit_config.run_dir, cur_nimg)))
+                save_image('%s/iter_%08d.png' % (submit_config.run_dir, cur_nimg), orin_recon)
 
             if cur_tick % network_snapshot_ticks == 0:
                 pkl = os.path.join(submit_config.run_dir, 'network-snapshot-%08d.pkl' % (cur_nimg))
                 misc.save_pkl((E, G, D, Gs), pkl)
+                
+                # save network snapshot to gdrive
+                pkl_drive = os.path.join(GOOGLE_DRIVE_PATH, 'snapshots', 'network-snapshot-%08d.pkl' % (cur_nimg))
+                misc.save_pkl((E, G, D, Gs), pkl_drive)
 
     misc.save_pkl((E, G, D, Gs), os.path.join(submit_config.run_dir, 'network-final.pkl'))
     summary_log.close()
