@@ -96,7 +96,7 @@ def training_loop(
                   drange_data             = [0, 255],
                   drange_net              = [-1,1],   # Dynamic range used when feeding image data to the networks.
                   mirror_augment          = False,
-                  resume_run_id           = config.GDRIVE_PATH,     # Run ID or network pkl to resume training from, None = start from scratch.
+                  resume_run_id           = config.ENCODER_PICKLE_DIR,     # Run ID or network pkl to resume training from, None = start from scratch.
                   resume_snapshot         = None,     # Snapshot index to resume training from, None = autodetect.
                   image_snapshot_ticks    = 1,        # How often to export image snapshots?
                   network_snapshot_ticks  = 4,       # How often to export network snapshots?
