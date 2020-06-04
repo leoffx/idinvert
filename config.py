@@ -22,9 +22,10 @@ DESC = ""
 DATA_DIR = "/content/gdrive/My Drive/Kopie von ffhq-r07.tfrecords"
 PICKLE_DIR = "/content/gdrive/My Drive/Public/tensorboards_shared/Training_Decoder_TF/00000-sgan-ffhq128-1gpu/network-snapshot-011489.pkl"
 
-ENCODER_PICKLE_DIR = ""
+ENCODER_PICKLE_DIR = None
 # Encoder
-GDRIVE_PATH = "/content/gdrive/My Drive/Public/tensorboards_shared/Training_Encoder_TF/128x128_All_Losses" # 128X128 ALL!
+GDRIVE_PATH = "/content/gdrive/My Drive/Public/tensorboards_shared/Training_Encoder_TF/128x128_RecW" # 128X128 Weighted Rec Loss
+#GDRIVE_PATH = "/content/gdrive/My Drive/Public/tensorboards_shared/Training_Encoder_TF/128x128_All_Losses" # 128X128 ALL!
 #GDRIVE_PATH = "/content/gdrive/My Drive/Public/tensorboards_shared/Training_Encoder_TF/128x128_Only_Rec"   # 128x128 Only Rec!
 #GDRIVE_PATH = "/content/gdrive/My Drive/Public/tensorboards_shared/Training_Encoder_TF/128x128_Weighted"   # 128x128 Weighted!
 
