@@ -37,7 +37,7 @@ def E_loss(E, G, D, perceptual_model, reals, feature_scale=0.00005, D_scale=0.1,
         recon_loss_pixel = tf.reduce_mean(tf.square(fake_X - reals))
         recon_loss_feats = autosummary('Loss/scores/loss_feats', recon_loss_feats)
         recon_loss_pixel = autosummary('Loss/scores/loss_pixel', recon_loss_pixel)
-        recon_loss = recon_loss_feats + recon_loss_pixel
+        recon_loss = recon_loss_pixel #recon_loss_feats
         recon_loss = autosummary('Loss/scores/recon_loss', recon_loss)
 
     with tf.variable_scope('adv_loss'):
