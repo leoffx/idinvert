@@ -184,9 +184,11 @@ def training_loop(
     tick_start_nimg = cur_nimg
     start_time = time.time()
 
-    
-    init = tf.initialize_all_variables()
-    sess.run(init)
+    init_pascal = tf.initialize_variables(
+        [global_step0],
+        name='init_pascal'
+    )
+    sess.run(init_pascal)
     
     print('Optimization starts!!!')
     
