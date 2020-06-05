@@ -118,7 +118,8 @@ def training_loop(
             print('Start: ', start)
         else:
             print('Constructing networks...')
-            G, D, Gs = misc.load_pkl(decoder_pkl.decoder_pkl)
+            print("LOADING CUSTOM 256x256 DECODER!!!")
+            _, G, D, Gs = misc.load_pkl(decoder_pkl.decoder_pkl)
             num_layers = Gs.components.synthesis.input_shape[1]
             E = tflib.Network('E', size=submit_config.image_size, filter=64, filter_max=1024, num_layers=num_layers, phase=True, **Encoder_args)
             start = 0
