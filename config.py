@@ -20,7 +20,7 @@ DESC = ""
 GDRIVE_PATH = "/content/drive/MyDrive/results"
 
 RESOLUTION = 512
-DATA_DIR = "/content/idinvert/datasets/bonsai/bonsai-r09.tfrecords"
+DATA_DIR = "/content/idinvert/datasets/bonsai"
 PICKLE_DIR = "/content/drive/MyDrive/results/network-snapshot-002364.pkl"
 ENCODER_PICKLE_DIR = ""
 
