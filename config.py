@@ -26,5 +26,6 @@ ENCODER_PICKLE_DIR = ""
 
 # only for generator training
 TIME = 0
-KIMG = 0
+KIMG = 2364
 
+INCEPTION_PATH = '/content/inception_v3_features.pkl'
