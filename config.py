@@ -11,17 +11,17 @@
 # Paths.
 
 result_dir = 'results'
-data_dir = 'datasets'
+data_dir = 'datasets/bonsai'
 cache_dir = 'cache'
 run_dir_ignore = ['results', 'datasets', 'cache']
 
 #----------------------------------------------------------------------------
 DESC = ""
-GDRIVE_PATH = "/content/gdrive/My Drive/Public/tensorboards_shared/Training_Encoder_TF/128x128_All_Losses" # 128X128 ALL!
+GDRIVE_PATH = "/content/drive/MyDrive/results"
 
-RESOLUTION = 128
-DATA_DIR = "/content/gdrive/My Drive/Kopie von ffhq-r07.tfrecords"
-PICKLE_DIR = "/content/gdrive/My Drive/Public/tensorboards_shared/Training_Decoder_TF/00000-sgan-ffhq128-1gpu/network-snapshot-011489.pkl"
+RESOLUTION = 512
+DATA_DIR = "/content/idinvert/datasets/bonsai/bonsai-r09.tfrecords"
+PICKLE_DIR = "/content/drive/MyDrive/results/network-snapshot-002364.pkl"
 ENCODER_PICKLE_DIR = ""
 
 # only for generator training
