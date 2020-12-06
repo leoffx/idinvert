@@ -6,4 +6,6 @@ __pycache__/
 *.jpeg
 *.npy
 *.log
+*.pkl
 /results/
+/datasets/

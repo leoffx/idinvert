@@ -57,8 +57,8 @@ def training_schedule(
     training_set,
     num_gpus,
     lod_initial_resolution  = 4,        # Image resolution used at the beginning.
-    lod_training_kimg       = 600,      # Thousands of real images to show before doubling the resolution.
-    lod_transition_kimg     = 600,      # Thousands of real images to show when fading in new layers.
+    lod_training_kimg       = 200,      # Thousands of real images to show before doubling the resolution.
+    lod_transition_kimg     = 200,      # Thousands of real images to show when fading in new layers.
     minibatch_base          = 16,       # Maximum minibatch size, divided evenly among GPUs.
     minibatch_dict          = {},       # Resolution-specific overrides.
     max_minibatch_per_gpu   = {},       # Resolution-specific maximum minibatch size per GPU.
@@ -267,10 +267,10 @@ def training_loop(
                 pkl_drive = os.path.join(config.GDRIVE_PATH, 'network-snapshot-%06d.pkl' % (cur_nimg // 1000))
                 misc.save_pkl((G, D, Gs), pkl_drive)
                 
-                try:
+                """ try:
                     metrics.run(pkl, run_dir=submit_config.run_dir, num_gpus=submit_config.num_gpus, tf_config=tf_config)
                 except:
-                    print("JO")
+                    print("JO") """
 
             # Update summaries and RunContext.
             metrics.update_autosummaries()
